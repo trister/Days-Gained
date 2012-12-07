@@ -28,3 +28,17 @@ survdiff(Surv(DG.clinical.culled$Patient..Survival,!DG.clinical.culled$Alive)~te
 
 
 
+#check the survival based only on whether the patients were on a trial
+
+cox.fit <- coxph(Surv(DG.clinical.culled$Patient..Survival,!DG.clinical.culled$Alive)~temp$trial, data=DG.clinical.culled)
+summary(cox.fit)
+
+km.fit <- survfit(Surv(DG.clinical.culled$Patient..Survival,!DG.clinical.culled$Alive)~temp$trial, data=DG.clinical.culled)
+ggkm(km.fit)
+
+survdiff(Surv(DG.clinical.culled$Patient..Survival[which(temp$trial==0)],!DG.clinical.culled$Alive[which(temp$trial==0)])~temp$Linear.DG[which(temp$trial==0)]>90, data=DG.clinical.culled)
+survdiff(Surv(DG.clinical.culled$Patient..Survival,!DG.clinical.culled$Alive)~temp$Pseudo.progressor., data=DG.clinical.culled)
+
+
+
+

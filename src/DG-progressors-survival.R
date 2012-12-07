@@ -16,8 +16,8 @@ source("./src/ggkm.R")
 
 ###Block for only the ones with progression
 
-DG.clinical.culled <- DG.clinical[which(rownames(DG.clinical) %in% DG.culled$Patient),]
-temp <- DG.culled
+DG.clinical.culled <- DG.clinical[which(rownames(DG.clinical) %in% DG.culled$Patient[which(DG.culled$Classification=="Progression")]),]
+temp <- DG.culled[which(DG.culled$Classification=="Progression"),]
 rownames(temp) <- temp$Patient
 temp <- temp[sort(temp$Patient),]
 
