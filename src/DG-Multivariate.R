@@ -28,3 +28,14 @@ cox.fit <- coxph(Surv(DG.clinical.culled$Patient..Survival,!DG.clinical.culled$A
 
 cox.fit <- coxph(Surv(DG.clinical.culled$Patient..Survival,!DG.clinical.culled$Alive)~as.factor(DG.clinical.culled$TMZ.During.XRT))
 summary(cox.fit)
+
+
+#redo this with the full 63 using the TTP data
+
+
+cox.fit <- coxph(Surv(DG.clinical$Patient..Survival,!DG.clinical$Alive)~as.factor(DG.TTP$Days.Gained>90)+as.factor(DG.clinical$trial)+DG.clinical$Age+
+  as.factor(DG.clinical$Gender)+as.factor(DG.clinical$RTOG.RPA.Class), data=DG.clinical)
+
+cox.fit <- coxph(Surv(DG.clinical$Patient..Survival,!DG.clinical$Alive)~as.factor(DG.clinical$RTOG.RPA.Class))
+summary(cox.fit)
+

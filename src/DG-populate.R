@@ -20,13 +20,19 @@ DG.clinical <- read.delim("./data/Clinical_PSP.txt",stringsAsFactors=FALSE)
 DG.TTP <- read.delim2("./data/TTP.txt",stringsAsFactors = FALSE)
 
 DG$TTP <- DG.TTP[DG$Patient,"Patient.ID..TTP"]
+DG.TTP$Days.Gained <- as.numeric(DG.TTP$Days.Gained)
 
 DG.culled <- DG[which(DG$Classification!="Nonprogressor"),]
 #DG.culled$TTP <- DG.TTP[DG.culled$Patient,"Patient.ID..TTP"]
 
 #put in the information whether the patient was on trial
-DG$trial <- c(1,0,1,1,0,1,0,1,0,1,0,0,0,0,0,0,0,1,1,1,1,0,1,0,0,0,0,0,0,1,1,0,0,1,1,1,0,0,1,0,0,1,0,1,1,0,1,0,1,1,1,0,0,1,0,0,1,0)
+#DG$trial <- c(1,0,1,1,0,1,0,1,0,1,0,0,0,0,0,0,0,1,1,1,1,0,1,0,0,0,0,0,0,1,1,0,0,1,1,1,0,0,1,0,0,1,0,1,1,0,1,0,1,1,1,0,0,1,0,0,1,0)
+DG.clinical$trial <- c(1,0,1,1,1,1,0,0,0,1,1,0,1,1,0,1,0,0,1,0,0,0,1,0,1,0,0,0,0,0,0,1,1,0,0,0,1,0,0,1,1,1,1,1,0,1,1,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0)
+  
 
+unlist(lapply(rownames(DG.clinical),function(x){
+  return(DG[which(DG$Patient==x),"trial"])
+}))
 p <- ggplot(DG.culled)
 p + geom_point(aes(x=1:dim(DG.culled)[1],y=Linear.DG[order(Linear.DG)],color=Classification[order(Linear.DG)]))
 
