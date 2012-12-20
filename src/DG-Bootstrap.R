@@ -14,7 +14,7 @@ N <- 10
 fit <- c()
 
 for(i in 1:N){
-  j <- sample(1:floor(2*length(DG$Patient)/3),replace=TRUE)
+  j <- sample(1:floor((N-1)*length(DG$Patient)/N),replace=TRUE)
   roc1 <- roc(DG.culled$Pseudo.progressor.[j],DG.culled$Linear.DG[j])
   cutoff <- coords(roc1,"best",ret="threshold")
   for(i in DG$Patient[-j]) {
