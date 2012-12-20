@@ -94,7 +94,7 @@ ggkm <- function(sfit,
     opts(legend.key = theme_rect(colour = NA)) +
     labs(linetype = ystrataname) +
     opts(plot.margin = unit(c(0, 1, .5,ifelse(m < 10, 1.5, 2.5)),"lines")) +
-    opts(title = main)
+    opts(title = main) + theme_bw(base_size = 12, base_family = "")
   
   ## Create a blank plot for place-holding
   ## .df <- data.frame()

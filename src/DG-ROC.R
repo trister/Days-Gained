@@ -20,7 +20,7 @@ temp <- list(data.frame(roc1$sensitivities,roc1$specificities),data.frame(roc2$s
 roc.data <- do.call(rbind.fill,temp)
 
 p2 <- ggplot(roc.data)
-p2 + geom_path(aes(y=roc1.sensitivities,x=roc1.specificities), size=1.5) + scale_x_reverse() + ylab("Sensitivity") + xlab("Specificity") + theme_grey(36) + geom_path(aes(y=roc2.sensitivities,x=roc2.specificities), size=1.5, lty=2) 
+p2 + geom_path(aes(y=roc1.sensitivities,x=roc1.specificities), size=1.5) + scale_x_reverse() + ylab("Sensitivity") + xlab("Specificity") + theme_grey(36) + geom_path(aes(y=roc2.sensitivities,x=roc2.specificities), size=1.5, lty=2) + theme_bw(base_size = 12, base_family = "")
 
 
 plot(roc1,lwd=6,font=3, cex.lab=2)
@@ -37,11 +37,15 @@ coords(roc1, "best", ret=c("threshold", "specificity", "sensitivity", "accuracy"
                            "tn","fn","tp","tn",   "npv", "ppv", "1-specificity",
                            "1-sensitivity", "1-npv", "1-ppv"))
 boxplot(DG.culled$Linear.DG~DG.culled$Classification)
+print(t.test(DG.culled$Linear.DG~DG.culled$Classification))
 
 #DG.culled.2 <- DG[which(DG$Classification!="Progression"),]
-#p <- ggplot(DG.culled.2)
-#p + geom_point(aes(x=1:dim(DG.culled.2)[1],y=Linear.DG[order(Linear.DG)],color=Classification[order(Linear.DG)]))
-#boxplot(DG.culled.2$Linear.DG~DG.culled.2$Classification)
+p <- ggplot(DG.culled)
+#p + geom_point(aes(x=1:dim(DG.culled)[1],y=Linear.DG[order(Linear.DG)],color=Classification[order(Linear.DG)]))
+#boxplot(DG.culled$Linear.DG~DG.culled$Classification)
+p + geom_boxplot(position="dodge", aes(x=DG.culled$Classification,y=DG.culled$Linear.DG),outlier.size=0) +geom_jitter(aes(x=DG.culled$Classification,y=DG.culled$Linear.DG,size=1.5),shape=2)+geom_hline(y=90,linetype=2,size=1,color="red") +theme_bw(base_size = 12, base_family = "")
+
+
 
 t.test(DG$Linear.DG[which(DG$Classification=="Pseudoprogression")],DG$Linear.DG[which(DG$Classification=="Nonprogressor")])
 

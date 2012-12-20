@@ -10,6 +10,9 @@ setwd("~/Days-Gained/")
 #load the data
 source("./src/DG-populate.R")
 
+#print out the statistics for table 1
+source("./src/DG-print-stats.R")
+
 #make the ROC analysis
 source("./src/DG-ROC.R")
 
@@ -27,4 +30,7 @@ source("./src/DG-all-TTP.R")
 
 #finally let's do the LOOCV
 source("./src/DG-LOOCV.R")
+
+#and the multivariate analysis
+source("./src/DG-Multivariate.R")
 

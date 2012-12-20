@@ -8,27 +8,50 @@
 
 require(ggplot2)
 
+# 
+# #load in the DG data
+# DG <- read.delim("./data/Linear_Days_Gained.txt",sep=",",stringsAsFactors = FALSE)
+# t.test(DG$Linear.DG[which(DG$Classification=="Pseudoprogression")],DG$Linear.DG[which(DG$Classification=="Progression")])
+# 
+# #load in the clinical data to go with it
+# DG.clinical <- read.delim("./data/Clinical_PSP.txt",stringsAsFactors=FALSE)
+# 
+# #and also the TTP data:
+# DG.TTP <- read.delim2("./data/TTP.txt",stringsAsFactors = FALSE)
+# 
+# DG$TTP <- DG.TTP[DG$Patient,"Patient.ID..TTP"]
+# DG.TTP$Days.Gained <- as.numeric(DG.TTP$Days.Gained)
+# 
+# DG.culled <- DG[which(DG$Classification!="Nonprogressor"),]
+# #DG.culled$TTP <- DG.TTP[DG.culled$Patient,"Patient.ID..TTP"]
+# 
+# #put in the information whether the patient was on trial
+# #DG$trial <- c(1,0,1,1,0,1,0,1,0,1,0,0,0,0,0,0,0,1,1,1,1,0,1,0,0,0,0,0,0,1,1,0,0,1,1,1,0,0,1,0,0,1,0,1,1,0,1,0,1,1,1,0,0,1,0,0,1,0)
+# DG.clinical$trial <- c(1,0,1,1,1,1,0,0,0,1,1,0,1,1,0,1,0,0,1,0,0,0,1,0,1,0,0,0,0,0,0,1,1,0,0,0,1,0,0,1,1,1,1,1,0,1,1,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0)
+#   
 
-#load in the DG data
-DG <- read.delim("./data/Linear_Days_Gained.txt",sep=",",stringsAsFactors = FALSE)
-t.test(DG$Linear.DG[which(DG$Classification=="Pseudoprogression")],DG$Linear.DG[which(DG$Classification=="Progression")])
+#here are the 68 new DG3 patients:
+DG.new <- read.delim("./data/DG3-fullsheet.txt",stringsAsFactors=FALSE)
 
-#load in the clinical data to go with it
-DG.clinical <- read.delim("./data/Clinical_PSP.txt",stringsAsFactors=FALSE)
 
-#and also the TTP data:
-DG.TTP <- read.delim2("./data/TTP.txt",stringsAsFactors = FALSE)
+DG.new$Classification <- DG.new$Patient.ID..Classification
+DG.new$Pseudo.progressor. <- unlist(lapply(DG.new$Classification,function(x){
+  if(x=="Pseudoprogression") 1
+  else 0
+}))
+DG.new$Linear.DG <- DG.new$Linear.model.Days.Gained.score
+DG.new$Patient <- rownames(DG.new)
+DG.new$Patient..Survival <- DG.new$Survival
+DG.new$trial <- DG.new$Trial
 
-DG$TTP <- DG.TTP[DG$Patient,"Patient.ID..TTP"]
-DG.TTP$Days.Gained <- as.numeric(DG.TTP$Days.Gained)
+DG <- DG.new
+DG.culled <- DG[which(DG$Classification=="Progression"|DG$Classification=="Pseudoprogression"),]
+#DG.culled <- DG.new[which(DG.new$Patient.ID..Classification!="Nonprogressor"),]
+DG.clinical <- DG
 
-DG.culled <- DG[which(DG$Classification!="Nonprogressor"),]
-#DG.culled$TTP <- DG.TTP[DG.culled$Patient,"Patient.ID..TTP"]
 
-#put in the information whether the patient was on trial
-#DG$trial <- c(1,0,1,1,0,1,0,1,0,1,0,0,0,0,0,0,0,1,1,1,1,0,1,0,0,0,0,0,0,1,1,0,0,1,1,1,0,0,1,0,0,1,0,1,1,0,1,0,1,1,1,0,0,1,0,0,1,0)
-DG.clinical$trial <- c(1,0,1,1,1,1,0,0,0,1,1,0,1,1,0,1,0,0,1,0,0,0,1,0,1,0,0,0,0,0,0,1,1,0,0,0,1,0,0,1,1,1,1,1,0,1,1,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0)
-  
+
+
 
 unlist(lapply(rownames(DG.clinical),function(x){
   return(DG[which(DG$Patient==x),"trial"])
