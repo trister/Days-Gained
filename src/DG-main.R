@@ -16,6 +16,9 @@ source("./src/DG-print-stats.R")
 #make the ROC analysis
 source("./src/DG-ROC.R")
 
+#check the ability of D/p to normalize the data:
+source("./src/DG-Drho.R")
+
 #the survival analysis for progressors
 source("./src/DG-progressors-survival.R")
 

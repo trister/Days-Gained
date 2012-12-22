@@ -43,7 +43,9 @@ print(t.test(DG.culled$Linear.DG~DG.culled$Classification))
 p <- ggplot(DG.culled)
 #p + geom_point(aes(x=1:dim(DG.culled)[1],y=Linear.DG[order(Linear.DG)],color=Classification[order(Linear.DG)]))
 #boxplot(DG.culled$Linear.DG~DG.culled$Classification)
-p + geom_boxplot(position="dodge", aes(x=DG.culled$Classification,y=DG.culled$Linear.DG),outlier.size=0) +geom_jitter(aes(x=DG.culled$Classification,y=DG.culled$Linear.DG,size=1.5),shape=2)+geom_hline(y=90,linetype=2,size=1,color="red") +theme_bw(base_size = 12, base_family = "")
+p + geom_boxplot(position="dodge", aes(x=DG.culled$Classification,y=DG.culled$Linear.DG),outlier.size=0) +
+  geom_jitter(aes(x=DG.culled$Classification,y=DG.culled$Linear.DG),size=6,shape=2)+
+  geom_hline(y=90,linetype=2,size=1,color="red") +theme_bw(base_size = 12, base_family = "")
 
 
 

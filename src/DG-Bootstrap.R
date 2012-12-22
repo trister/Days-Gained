@@ -2,7 +2,7 @@
 ### Seattle, WA
 ### 20121219
 
-### Let's do a Boostrap 10-fold CV
+### Let's do a10-fold CV
 
 
 require(ggplot2)
